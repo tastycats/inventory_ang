@@ -3,14 +3,18 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { InventoryViewComponent } from './inventory-view/inventory-view.component';
+import { materialImports } from './material.imports';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    InventoryViewComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ...materialImports
   ],
   providers: [],
   bootstrap: [AppComponent]

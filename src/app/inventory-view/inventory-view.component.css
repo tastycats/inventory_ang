@@ -1,0 +1,9 @@
+a.add-inventory {
+    position: fixed;
+    bottom: 2em;
+    right: 2em;
+}
+
+button[mat-fab] {
+    font-size: 1.5em;
+}
