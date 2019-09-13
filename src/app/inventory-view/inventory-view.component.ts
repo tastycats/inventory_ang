@@ -1,21 +1,20 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef, HostListener } from '@angular/core';
 import { CommunicatorService } from '../communicator.service';
 import { InventoryItem } from '../interfaces/inventory-item';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { NetworkingService } from '../networking.service';
 import { Currencies } from '../interfaces/currencies';
-import { debounceTime, map } from 'rxjs/operators';
-import { fromEvent } from 'rxjs';
-import { ScrollDispatchModule, ScrollDispatcher } from '@angular/cdk/scrolling';
+import { ScrollDispatcher } from '@angular/cdk/scrolling';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-inventory-view',
   templateUrl: './inventory-view.component.html',
   styleUrls: ['./inventory-view.component.css']
 })
-export class InventoryViewComponent implements OnInit, AfterViewInit {
+export class InventoryViewComponent implements OnInit {
   public static messageKey = 'inventory-view';
 
   inventory: InventoryItem[];
@@ -35,8 +34,11 @@ export class InventoryViewComponent implements OnInit, AfterViewInit {
     this.changeRef
   );
 
+  private debounceTimer: number;
+
   columnsToDisplay = [
     'productName',
+    'manufacturer',
     'units',
     'lastUpdated',
     'category',
@@ -57,6 +59,9 @@ export class InventoryViewComponent implements OnInit, AfterViewInit {
     this.paginator.ngOnInit();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.comms.postMessage(this, AppComponent.messageKey, {
+      'get-inventory': null
+    });
     this.comms.getMessages().subscribe(msg => {
       if (msg.dest === '@all' || msg.dest === InventoryViewComponent.messageKey) {
         const data = msg.data;
@@ -80,28 +85,30 @@ export class InventoryViewComponent implements OnInit, AfterViewInit {
     this.network.getData<Currencies>(this.exchangeRateUrl, InventoryViewComponent.messageKey, 'currencies');
   }
 
-  ngAfterViewInit() {
-    this.scroll.ancestorScrolled(this.inventoryTable)
-      .pipe(debounceTime(200))
-      .subscribe(() => {
-        this.tableScrolled();
-      });
-    this.dataSource.paginator = this.paginator;
-  }
-
   rowClicked(item: InventoryItem) {
     console.log(item);
   }
 
-  tableScrolled() {
+  @HostListener('window:scroll', ['$event'])
+  tableScrolled(ev) {
     const elem = window;
-    if ((elem.innerHeight + elem.pageYOffset + 200) >= document.body.offsetHeight && this.pageLength <= this.dataLength) {
-      this.pageLength += 20;
-      this.paginator._changePageSize(this.pageLength);
-      this.dataSource._updatePaginator(this.pageLength);
-      // this.dataSource.data = this.inventory;
-      // this.paginator.pageSize = this.pageLength;
-      // this.dataSource.paginator = this.paginator;
+    if (this.debounceTimer) {
+      window.cancelAnimationFrame(this.debounceTimer);
     }
+    this.debounceTimer =  elem.requestAnimationFrame(() => {
+      if ((elem.innerHeight + elem.pageYOffset + 200) >= document.body.offsetHeight && this.pageLength <= this.dataLength) {
+        console.log('scroll');
+        this.pageLength += 20;
+        this.debounceTimer = 0;
+        this.paginator._changePageSize(this.pageLength);
+      }
+    });
+  }
+
+  applyFilter(filter: string) {
+    console.log(filter);
+    this.dataSource.filter = filter.trim().toLowerCase();
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 }

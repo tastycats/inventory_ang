@@ -8,3 +8,6 @@ nav {
     flex-grow: 1;
 }
 
+mat-toolbar {
+    min-height: 4em;
+}

@@ -4,10 +4,6 @@ a.add-inventory {
     right: 2em;
 }
 
-button[mat-fab] {
-    font-size: 1.5em;
-}
-
 td.mat-cell{
     padding: 0 1em;
 }
@@ -19,12 +15,12 @@ th.mat-header-cell{
 tr.mat-row {
     cursor: pointer;
 }
-/* 
-mat-header-row {
-    justify-content: space-between;
+
+section.table-inventory {
+    width: 80%;
+    margin: 2em auto;
 }
 
-mat-row {
-    justify-content: space-between;
-    cursor: pointer;
-} */
+section.table-inventory table {
+    width: 100%;
+}

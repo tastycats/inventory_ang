@@ -1,0 +1,42 @@
+<section class="form-container mat-elevation-z6">
+    <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+            <input type="text" matInput placeholder="Product Name" formControlName="nameControl">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="Manufacturer" formControlName="manufControl">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Product Category</mat-label>
+            <mat-select formControlName="catControl">
+                <mat-option *ngFor="let cat of categories" [value]="cat">{{cat | titlecase}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <input type="number" matInput placeholder="Units Available" formControlName="unitsControl">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="number" matInput placeholder="Unit Price" formControlName="priceControl">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="Tags, comma separated" formControlName="tagsControl">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="Area" formControlName="areaControl">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="Street" formControlName="streetControl">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="Zone" formControlName="zoneControl">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="Shelf" formControlName="shelfControl">
+        </mat-form-field>
+        <mat-form-field>
+            <textarea matInput placeholder="Enter product description" formControlName="descControl"></textarea>
+        </mat-form-field>
+        <button mat-raised-button color="accent" type="submit" [disabled]="!bookingForm.valid">Save Product</button>
+    </form>
+    
+</section>

@@ -1,0 +1,15 @@
+section.form-container {
+    width: 80%;
+    margin: 3em auto;
+    background: white;
+}
+
+section.form-container form {
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 2em;
+}
+
+section.form-container form button[type="submit"] {
+    align-self: flex-end;
+}
