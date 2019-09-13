@@ -5,6 +5,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSelectModule } from '@angular/material/select';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 export const materialImports = [
     BrowserAnimationsModule,
@@ -13,5 +16,8 @@ export const materialImports = [
     MatSortModule,
     MatPaginatorModule,
     MatTableModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatToolbarModule,
+    MatSelectModule,
+    ScrollingModule
 ];
