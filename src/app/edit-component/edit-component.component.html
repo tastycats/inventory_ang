@@ -36,7 +36,10 @@
         <mat-form-field>
             <textarea matInput placeholder="Enter product description" formControlName="descControl"></textarea>
         </mat-form-field>
-        <button mat-raised-button color="accent" type="submit" [disabled]="!bookingForm.valid">Save Product</button>
+        <button mat-raised-button color="accent" type="submit" *ngIf="!preValue" [disabled]="!bookingForm.valid">Save Product</button>
     </form>
-    
+    <div class="alt-actions" *ngIf="preValue" >
+        <button mat-raised-button matTooltip="cancel editing" (click)="editCancelled()">Cancel</button>
+        <button mat-raised-button color="accent" [disabled]="!bookingForm.valid" (click)="editDone()">Update Product</button>
+    </div>
 </section>

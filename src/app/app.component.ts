@@ -34,11 +34,44 @@ export class AppComponent implements OnInit {
           }
         }
 
-        if ('inventory-update' in data) {
+        // an item was added
+        if ('inventory-add' in data) {
           if (this.inventory) {
-            this.inventory.push(data['inventory-update']);
+            this.inventory.push(data['inventory-add']);
           } else {
-            this.inventory = [data['inventory-update']];
+            this.inventory = [data['inventory-add']];
+          }
+          this.comms.postMessage(this, 'inventory-view', {
+            inventory: this.inventory
+          });
+        }
+
+        // an item was modified
+        if ('inventory-modified' in data) {
+          if (this.inventory) {
+            const item: InventoryItem = data['inventory-modified'];
+            const idx = this.inventory.map(itm => itm.id).indexOf(item.id);
+            console.log(idx);
+            if (idx > -1) {
+              this.inventory[idx] = item;
+            }
+          }
+          // else {
+          //   this.inventory = [data['inventory-modified']];
+          // }
+          this.comms.postMessage(this, 'inventory-view', {
+            inventory: this.inventory
+          });
+        }
+
+        if ('inventory-delete' in data) {
+          if (this.inventory) {
+            const id = data['inventory-delete'];
+            const idx = this.inventory.map(itm => itm.id).indexOf(id);
+            console.log(idx);
+            if (idx > -1) {
+              this.inventory.splice(idx, 1);
+            }
           }
           this.comms.postMessage(this, 'inventory-view', {
             inventory: this.inventory

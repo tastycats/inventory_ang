@@ -41,4 +41,34 @@ export class NetworkingService {
         this.comms.postMessage(this, dest, {[key]: res});
       });
   }
+
+  putData<T>(url: string, dest: string, data: string, key = 'inventory') {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })};
+    this.http.put<T>(url, data, httpOptions)
+      .pipe(
+        retry(3),
+        catchError(err => {
+          return throwError(err);
+        })
+      )
+      .subscribe(res => {
+        this.comms.postMessage(this, dest, {[key]: res});
+      });
+  }
+
+  deleteData<T>(url: string, dest: string, data: string, key = 'inventory') {
+    this.http.delete<T>(url)
+      .pipe(
+        retry(3),
+        catchError(err => {
+          return throwError(err);
+        })
+      )
+      .subscribe(res => {
+        this.comms.postMessage(this, dest, {[key]: data});
+      });
+  }
 }

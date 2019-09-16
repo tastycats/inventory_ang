@@ -91,6 +91,8 @@ export class InventoryViewComponent implements OnInit {
   rowClicked(item: InventoryItem) {
     // console.log(item);
     this.dialog.open(ItemDetailsDialogComponent, {
+      height: '80%',
+      width: '80%',
       data: item
     });
   }

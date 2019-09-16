@@ -3,6 +3,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ItemDetailsDialogComponent } from './item-details-dialog.component';
 import { materialImports } from '../material.imports';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { EditComponentComponent } from '../edit-component/edit-component.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ItemDetailsDialogComponent', () => {
   let component: ItemDetailsDialogComponent;
@@ -10,10 +13,13 @@ describe('ItemDetailsDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ItemDetailsDialogComponent ],
+      declarations: [ ItemDetailsDialogComponent, EditComponentComponent ],
       imports: [
         ...materialImports,
-        MatDialogModule
+        MatDialogModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule
       ],
       providers: [
         {provide: MatDialogRef, useValue: {}},
