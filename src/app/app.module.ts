@@ -9,13 +9,15 @@ import { InventoryViewComponent } from './inventory-view/inventory-view.componen
 import { materialImports } from './material.imports';
 import { NavbarComponent } from './navbar/navbar.component';
 import { EditComponentComponent } from './edit-component/edit-component.component';
+import { ItemDetailsDialogComponent } from './item-details-dialog/item-details-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     InventoryViewComponent,
     NavbarComponent,
-    EditComponentComponent
+    EditComponentComponent,
+    ItemDetailsDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -26,6 +28,7 @@ import { EditComponentComponent } from './edit-component/edit-component.componen
     ReactiveFormsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ItemDetailsDialogComponent, EditComponentComponent]
 })
 export class AppModule { }

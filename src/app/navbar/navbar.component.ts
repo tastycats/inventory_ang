@@ -27,7 +27,7 @@ export class NavbarComponent implements OnInit {
     this.postCurrency();
   }
 
-  postCurrency(){
+  postCurrency() {
     this.comms.postMessage(this, 'inventory-view', {
       currency: this.selectedCurrency
     });

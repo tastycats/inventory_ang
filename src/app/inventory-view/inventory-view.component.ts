@@ -8,6 +8,8 @@ import { Currencies } from '../interfaces/currencies';
 import { ScrollDispatcher } from '@angular/cdk/scrolling';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { AppComponent } from '../app.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ItemDetailsDialogComponent } from '../item-details-dialog/item-details-dialog.component';
 
 @Component({
   selector: 'app-inventory-view',
@@ -50,7 +52,8 @@ export class InventoryViewComponent implements OnInit {
     private comms: CommunicatorService,
     private network: NetworkingService,
     private scroll: ScrollDispatcher,
-    private changeRef: ChangeDetectorRef) {
+    private changeRef: ChangeDetectorRef,
+    private dialog: MatDialog) {
     this.dataSource = new MatTableDataSource<InventoryItem>();
   }
 
@@ -86,7 +89,10 @@ export class InventoryViewComponent implements OnInit {
   }
 
   rowClicked(item: InventoryItem) {
-    console.log(item);
+    // console.log(item);
+    this.dialog.open(ItemDetailsDialogComponent, {
+      data: item
+    });
   }
 
   @HostListener('window:scroll', ['$event'])

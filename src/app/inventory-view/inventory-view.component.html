@@ -3,6 +3,9 @@
 </a>
 
 <section class="table-inventory">
+    <mat-chip-list>
+        <mat-chip color="primary">{{ dataLength }}</mat-chip>
+    </mat-chip-list>
     <mat-form-field>
         <input type="text" matInput placeholder="Filter" (keyup)="applyFilter($event.target.value)">
     </mat-form-field>

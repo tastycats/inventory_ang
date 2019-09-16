@@ -11,6 +11,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatChipsModule } from '@angular/material/chips';
 
 export const materialImports = [
     BrowserAnimationsModule,
@@ -25,5 +27,7 @@ export const materialImports = [
     ScrollingModule,
     MatInputModule,
     MatFormFieldModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule,
+    MatChipsModule
 ];

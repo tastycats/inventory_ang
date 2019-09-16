@@ -1,0 +1,16 @@
+section.details-container {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+section.details-container div {
+    margin: .4em 0;
+}
+
+div.btn-container {
+    align-self: flex-end;
+}
+
+div.btn-container button {
+    margin: 1em;;
+}
