@@ -1,12 +1,13 @@
-<a [routerLink]="['add']" class="add-inventory">
-    <button mat-fab matTooltip="Add an item" color="primary"><mat-icon >add_box</mat-icon></button>
-</a>
+
 
 <mat-tab-group (selectedTabChange)="tabSelectIndexChange($event)">
     <mat-tab >
         <ng-template mat-tab-label>
             <mat-icon>table_chart</mat-icon>
         </ng-template>
+        <a [routerLink]="['add']" class="add-inventory">
+            <button mat-fab matTooltip="Add an item" color="primary"><mat-icon >add_box</mat-icon></button>
+        </a>
         <section class="table-inventory">
             <mat-chip-list>
                 <mat-chip color="primary" matTooltip="Total entries">{{ dataLength }}</mat-chip>
