@@ -2,39 +2,56 @@
     <button mat-fab matTooltip="Add an item" color="primary"><mat-icon >add_box</mat-icon></button>
 </a>
 
-<section class="table-inventory">
-    <mat-chip-list>
-        <mat-chip color="primary">{{ dataLength }}</mat-chip>
-    </mat-chip-list>
-    <mat-form-field>
-        <input type="text" matInput placeholder="Filter" (keyup)="applyFilter($event.target.value)">
-    </mat-form-field>
-    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" matSortActive="lastUpdated" matSortDirection="desc" #inventoryTable>
-        <ng-container matColumnDef="productName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-            <td mat-cell *matCellDef="let elem" matTooltip="View Details"> {{elem.productName}} </td>
-        </ng-container>
-        <ng-container matColumnDef="manufacturer">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Manufacturer </th>
-                <td mat-cell *matCellDef="let elem" matTooltip="View Details"> {{elem.manufacturer}} </td>
-            </ng-container>
-        <ng-container matColumnDef="units">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Units </th>
-            <td mat-cell *matCellDef="let elem" matTooltip="View Details"> {{elem.units}} </td>
-        </ng-container>
-        <ng-container matColumnDef="lastUpdated">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Updated </th>
-            <td mat-cell *matCellDef="let elem" matTooltip="View Details"> {{elem.lastUpdated | date}} </td>
-        </ng-container>
-        <ng-container matColumnDef="category">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
-            <td mat-cell *matCellDef="let elem" matTooltip="View Details"> {{elem.category}} </td>
-        </ng-container>
-        <ng-container matColumnDef="unitPrice">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
-            <td mat-cell *matCellDef="let elem" matTooltip="View Details"> {{elem.unitPrice * ((currencies)?currencies.rates[selectedCurrency]: 1.0) | currency: selectedCurrency }} </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-        <tr mat-row *matRowDef="let row; columns: columnsToDisplay" (click)="rowClicked(row)"></tr>
-    </table>
-</section>
+<mat-tab-group (selectedTabChange)="tabSelectIndexChange($event)">
+    <mat-tab >
+        <ng-template mat-tab-label>
+            <mat-icon>table_chart</mat-icon>
+        </ng-template>
+        <section class="table-inventory">
+            <mat-chip-list>
+                <mat-chip color="primary" matTooltip="Total entries">{{ dataLength }}</mat-chip>
+                <mat-chip color="accent" selected matTooltip="Low running stock">{{ infos.warn }}</mat-chip>
+                <mat-chip color="warn" selected matTooltip="Restock, Will run out soon">{{ infos.alert }}</mat-chip>
+            </mat-chip-list>
+            <mat-form-field>
+                <input type="text" matInput placeholder="Filter" (keyup)="applyFilter($event.target.value)">
+            </mat-form-field>
+            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" matSortActive="lastUpdated" matSortDirection="desc" #inventoryTable>
+                <ng-container matColumnDef="productName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                    <td mat-cell *matCellDef="let elem" matTooltip="View Details"> {{elem.productName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="manufacturer">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Manufacturer </th>
+                    <td mat-cell *matCellDef="let elem" matTooltip="View Details"> {{elem.manufacturer}} </td>
+                </ng-container>
+                <ng-container matColumnDef="units">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Units </th>
+                    <td mat-cell *matCellDef="let elem" matTooltip="View Details"> {{elem.units}} </td>
+                </ng-container>
+                <ng-container matColumnDef="lastUpdated">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Updated </th>
+                    <td mat-cell *matCellDef="let elem" matTooltip="View Details"> {{elem.lastUpdated | date}} </td>
+                </ng-container>
+                <ng-container matColumnDef="category">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+                    <td mat-cell *matCellDef="let elem" matTooltip="View Details"> {{elem.category}} </td>
+                </ng-container>
+                <ng-container matColumnDef="unitPrice">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+                    <td mat-cell *matCellDef="let elem" matTooltip="View Details"> {{elem.unitPrice * ((currencies)?currencies.rates[selectedCurrency]: 1.0) | currency: selectedCurrency }} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnsToDisplay" (click)="rowClicked(row)"></tr>
+            </table>
+        </section>
+    </mat-tab>
+    <mat-tab >
+        <ng-template mat-tab-label>
+            <mat-icon>bar_chart</mat-icon>
+        </ng-template>
+        <div id="chartcontainer">
+            
+        </div>
+    </mat-tab>
+</mat-tab-group>

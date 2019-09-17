@@ -24,3 +24,8 @@ section.table-inventory {
 section.table-inventory table {
     width: 100%;
 }
+
+#chartcontainer {
+    width: 100%;
+    height: 20em;
+}

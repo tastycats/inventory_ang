@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, HostListener } from '@angular/core';
 import { CommunicatorService } from '../communicator.service';
 import { InventoryItem } from '../interfaces/inventory-item';
 import { MatTableDataSource } from '@angular/material/table';
@@ -9,7 +9,15 @@ import { ScrollDispatcher } from '@angular/cdk/scrolling';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { AppComponent } from '../app.component';
 import { MatDialog } from '@angular/material/dialog';
+import * as CanvasJS from '../../assets/js/canvasjs.min';
 import { ItemDetailsDialogComponent } from '../item-details-dialog/item-details-dialog.component';
+import { MatTabChangeEvent } from '@angular/material/tabs';
+
+
+interface PlotLabels {
+  y: number;
+  name: string;
+}
 
 @Component({
   selector: 'app-inventory-view',
@@ -47,7 +55,14 @@ export class InventoryViewComponent implements OnInit {
     'unitPrice'
   ];
 
+  public infos = {
+    alert: 0,
+    warn: 0
+  };
 
+  plotData: PlotLabels[] = [];
+
+  public chart: CanvasJS.Chart;
   constructor(
     private comms: CommunicatorService,
     private network: NetworkingService,
@@ -73,6 +88,12 @@ export class InventoryViewComponent implements OnInit {
           this.dataLength = data.inventory.length;
           this.dataSource.data = this.inventory;
           console.log(this.inventory);
+          this.processData();
+          console.log(this.plotData);
+          if (this.chart) {
+            this.chart.options.data[0].dataPoints = this.plotData;
+            this.chart.render();
+          }
         }
         if ('currency' in data) {
           this.selectedCurrency = data.currency;
@@ -89,7 +110,6 @@ export class InventoryViewComponent implements OnInit {
   }
 
   rowClicked(item: InventoryItem) {
-    // console.log(item);
     this.dialog.open(ItemDetailsDialogComponent, {
       height: '80%',
       width: '80%',
@@ -118,5 +138,64 @@ export class InventoryViewComponent implements OnInit {
     this.dataSource.filter = filter.trim().toLowerCase();
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+  }
+
+
+  tabSelectIndexChange(ev: MatTabChangeEvent) {
+    if (ev.index === 1) {
+      this.generateChart();
+    }
+  }
+
+  generateChart() {
+    this.chart = new CanvasJS.Chart(
+      'chartcontainer',
+      {
+        theme: 'light2',
+        animationEnabled: true,
+        exportEnabled: true,
+        title: {
+          text: 'Inventory contents'
+        },
+        data: [{
+          type: 'pie',
+          showInLegend: true,
+          toolTipContent: '<b>{name}</b> ${y} (#percent%)',
+          indexLabel: '{name} - #percent%',
+          dataPoints: this.plotData
+        }]
+      });
+
+    this.chart.render();
+  }
+
+  processData() {
+    this.infos = {
+      warn: 0,
+      alert: 0
+    };
+
+    const datapoints = {};
+
+    // const plots = [];
+
+    this.inventory.forEach(item => {
+      if (item.units < 10000) {
+        this.infos.alert++;
+      } else if (item.units < 50000) {
+        this.infos.warn++;
+      }
+      if (datapoints[item.category]) {
+        datapoints[item.category]++;
+      } else {
+        datapoints[item.category] = 1;
+      }
+    });
+
+    Object.keys(datapoints).map(k => {
+      this.plotData.push({y: datapoints[k], name: k});
+    });
+
+    // console.log(this.plotData);
   }
 }

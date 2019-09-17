@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatTabsModule } from '@angular/material/tabs';
 
 export const materialImports = [
     BrowserAnimationsModule,
@@ -29,5 +30,6 @@ export const materialImports = [
     MatFormFieldModule,
     MatIconModule,
     MatDialogModule,
-    MatChipsModule
+    MatChipsModule,
+    MatTabsModule
 ];
