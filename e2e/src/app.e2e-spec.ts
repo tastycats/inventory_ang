@@ -9,28 +9,29 @@ describe('Add  page', () => {
     page = new AppPage();
   });
 
-  it('should exist', () => {
-    page.navigateTo();
-    expect(page.getTitleText()).toBeTruthy();
-  });
+  // it('should exist', () => {
+  //   page.navigateTo();
+  //   expect(page.getTitleText()).toBeTruthy();
+  // });
 
-  it('should be disabled', () => {
-    page.navigateTo();
-    expect(page.getSubmitButton().getAttribute('disabled')).toBe('true');
-  });
+  // it('should be disabled', () => {
+  //   page.navigateTo();
+  //   expect(page.getSubmitButton().getAttribute('disabled')).toBe('true');
+  // });
 
-  it('should be available', () => {
-    page.navigateTo();
-    // console.log(page.getInput().getAttribute('formcontrolname'));
-    expect(page.getInput().getAttribute('formcontrolname')).toBe('nameControl');
-  });
+  // it('should be available', () => {
+  //   page.navigateTo();
+  //   // console.log(page.getInput().getAttribute('formcontrolname'));
+  //   expect(page.getInput().getAttribute('formcontrolname')).toBe('nameControl');
+  // });
 
-  it('should contain abc', () => {
-    const el = page.getElement();
-    el(by.css('input[formcontrolname="nameControl"]')).sendKeys('abc');
+  // it('should contain abc', () => {
+  //   page.navigateTo();
+  //   const el = page.getElement();
+  //   el(by.css('input[formcontrolname="nameControl"]')).sendKeys('abc');
 
-    expect(page.getInput().getAttribute('value')).toBe('abc');
-  });
+  //   expect(page.getInput().getAttribute('value')).toBe('abc');
+  // });
 
   // beforeEach(async () => {
   //   const el = page.getElement();
