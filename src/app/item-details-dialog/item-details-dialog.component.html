@@ -1,0 +1,49 @@
+<section class="details-container mat-typography" *ngIf="data && !editOpen">
+    <div>
+        name: {{ data.productName }}
+    </div>
+    <div>
+        Manufacturer: {{ data.manufacturer }}
+    </div>
+    <div>
+        Category: {{ data.category }}
+    </div>
+    <div>
+        Product Description: {{ data.desc }}
+    </div>
+    <div>
+        Units Available: {{ data.units }}
+    </div>
+    <div>
+        Unit Price: {{ data.unitPrice }}
+    </div>
+    <div>
+        Date Updated: {{ data.lastUpdated | date:'medium' }}
+    </div>
+    <mat-chip-list>
+        Tags: 
+        <mat-chip *ngFor="let tag of data.tags" color="primary">
+            {{tag}}
+        </mat-chip>
+    </mat-chip-list>
+    <section *ngIf="data.location">
+        <div>
+            Area: {{ data.location.area }}
+        </div>
+        <div>
+            Street: {{ data.location.street }}
+        </div>
+        <div>
+            Zone: {{ data.location.zone }}
+        </div>
+        <div>
+            Shelf: {{ data.location.shelf }}
+        </div>
+    </section>
+    <div class="btn-container">
+        <button mat-raised-button color="warn" [mat-dialog-close] (click)="onDelete()"><mat-icon>delete</mat-icon> Delete</button>
+        <button mat-raised-button color="accent" (click)="editOpen = true"><mat-icon>edit</mat-icon> Edit</button>
+    </div>
+</section>
+
+<app-edit-component [preValue]="data" *ngIf="editOpen" (doneEditing)="doneEditing($event)"></app-edit-component>

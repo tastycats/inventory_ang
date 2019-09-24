@@ -1,0 +1,13 @@
+nav {
+    min-height: 4em;
+    width: 100%;
+    display: flex;
+}
+
+.spacer {
+    flex-grow: 1;
+}
+
+mat-toolbar {
+    min-height: 4em;
+}

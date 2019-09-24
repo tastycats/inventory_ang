@@ -1,0 +1,10 @@
+<mat-toolbar color='primary'>
+    <nav color="primary">
+        <div class="spacer"></div>
+        <mat-form-field>
+            <mat-select name="currency" id="currency-select"[(value)]="selectedCurrency" (selectionChange)="selectChanged()">
+                <mat-option *ngFor="let cur of currencies" [value]="cur">{{cur}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </nav>
+</mat-toolbar>

@@ -2,10 +2,23 @@ import { browser, by, element } from 'protractor';
 
 export class AppPage {
   navigateTo() {
-    return browser.get(browser.baseUrl) as Promise<any>;
+    console.log(browser.baseUrl + 'add');
+    return browser.get(browser.baseUrl + 'add') as Promise<any>;
   }
 
   getTitleText() {
-    return element(by.css('app-root h1')).getText() as Promise<string>;
+    return element(by.css('.form-container')).getText() as Promise<string>;
+  }
+
+  getSubmitButton() {
+    return element(by.tagName('button'));
+  }
+
+  getInput() {
+    return element(by.css('input[formcontrolname="nameControl"]'));
+  }
+
+  getElement() {
+    return element;
   }
 }
